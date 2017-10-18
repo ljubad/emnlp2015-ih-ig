@@ -146,10 +146,10 @@ public class ArgumentSequenceLabelingEvaluation
             Set<DocumentRegister> commentsForums = new TreeSet<>();
             commentsForums.add(DocumentRegister.ARTCOMMENT);
             commentsForums.add(DocumentRegister.FORUMPOST);
+            commentsForums.add(DocumentRegister.BLOGPOST);
+            commentsForums.add(DocumentRegister.ARTICLE);
 
             Set<DocumentRegister> blogsArticles = new TreeSet<>();
-            blogsArticles.add(DocumentRegister.BLOGPOST);
-            blogsArticles.add(DocumentRegister.ARTICLE);
 
             // one way
             runCrossRegister(
@@ -213,7 +213,9 @@ public class ArgumentSequenceLabelingEvaluation
                 result.put(Constants.DIM_READER_TEST, ArgumentSequenceSentenceLevelReader.class);
                 result.put(Constants.DIM_READER_TEST_PARAMS,
                         Arrays.asList(ArgumentSequenceSentenceLevelReader.PARAM_SOURCE_LOCATION,
-                                corpusFilePathTrain,
+//                                corpusFilePathTrain,
+                                "/root/pipeline-poc-code/xmi/",
+//                                "/home/david/dev/workspaces/workspace-lazar/pipeline/xmi",
                                 ArgumentSequenceSentenceLevelReader.PARAM_PATTERNS,
                                 ArgumentSequenceSentenceLevelReader.INCLUDE_PREFIX + "*.xmi",
                                 ArgumentSequenceSentenceLevelReader.PARAM_LENIENT, false,
