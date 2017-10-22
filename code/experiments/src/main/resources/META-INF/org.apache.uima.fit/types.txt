@@ -1,2 +1,3 @@
 classpath*:desc/types/WebArgumentTypeSystem.xml
 classpath*:desc/types/EmbeddingsAnnotation.xml
+classpath*:desc/types/TypeSystem.xml

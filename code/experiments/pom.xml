@@ -322,6 +322,7 @@
 					<typeSystemIncludes>
 						<include>src/main/resources/desc/types/WebArgumentTypeSystem.xml</include>
 						<include>src/main/resources/desc/types/EmbeddingsAnnotation.xml</include>
+						<include>src/main/resources/desc/types/TypeSystem.xml</include>
 					</typeSystemIncludes>
 				</configuration>
 				<executions>
