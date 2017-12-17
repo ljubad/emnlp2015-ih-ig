@@ -22,9 +22,9 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>de.tudarmstadt.ukp.dkpro.tc</groupId>
+		<groupId>org.dkpro.tc</groupId>
 		<artifactId>dkpro-tc</artifactId>
-		<version>0.7.0</version>
+		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 
 	<groupId>de.tudarmstadt.ukp.experiments.argumentation.emnlp2015</groupId>
@@ -32,6 +32,7 @@
 	<version>0.0.3-SNAPSHOT</version>
 
 	<properties>
+		<dkpro.core.version>1.9.0-SNAPSHOT</dkpro.core.version>
 		<argumentation.version>0.0.2</argumentation.version>
 	</properties>
 
@@ -48,7 +49,7 @@
 				<checksumPolicy>warn</checksumPolicy>
 			</releases>
 			<snapshots>
-				<enabled>false</enabled>
+				<enabled>true</enabled>
 			</snapshots>
 		</repository>
 
@@ -58,29 +59,43 @@
 	<dependencies>
 		<!--TC related dependencies -->
 		<dependency>
-			<groupId>de.tudarmstadt.ukp.dkpro.tc</groupId>
+			<groupId>org.dkpro.tc</groupId>
 			<artifactId>dkpro-tc-core</artifactId>
 		</dependency>
-		<dependency>
+		<!-- https://mvnrepository.com/artifact/org.dkpro.tc/dkpro-tc-ml-mallet -->
+		<!--<dependency>-->
+			<!--<groupId>org.dkpro.tc</groupId>-->
+			<!--<artifactId>dkpro-tc-ml-mallet</artifactId>-->
+			<!--<version>1.0.0-SNAPSHOT</version>-->
+			<!--<exclusions>-->
+				<!--<exclusion>-->
+					<!--<artifactId>com.googlecode.matrix-toolkits-java</artifactId>-->
+					<!--<groupId>mtj</groupId>-->
+				<!--</exclusion>-->
+			<!--</exclusions>-->
+		<!--</dependency>-->
+
+		<!--<dependency>
 			<groupId>de.tudarmstadt.ukp.dkpro.tc</groupId>
 			<artifactId>dkpro-tc-ml-mallet</artifactId>
+			<version>1.7.0</version>
 			<exclusions>
 				<exclusion>
 					<artifactId>com.googlecode.matrix-toolkits-java</artifactId>
 					<groupId>mtj</groupId>
 				</exclusion>
 			</exclusions>
-		</dependency>
+		</dependency>-->
 		<dependency>
-			<groupId>de.tudarmstadt.ukp.dkpro.tc</groupId>
+			<groupId>org.dkpro.tc</groupId>
 			<artifactId>dkpro-tc-features</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>de.tudarmstadt.ukp.dkpro.tc</groupId>
+			<groupId>org.dkpro.tc</groupId>
 			<artifactId>dkpro-tc-features-ngram</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>de.tudarmstadt.ukp.dkpro.tc</groupId>
+			<groupId>org.dkpro.tc</groupId>
 			<artifactId>dkpro-tc-ml-svmhmm</artifactId>
 		</dependency>
 
@@ -129,7 +144,7 @@
 		<dependency>
 			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
 			<artifactId>de.tudarmstadt.ukp.dkpro.core.api.discourse-asl</artifactId>
-			<version>${dkpro.core.version}</version>
+			<version>1.7.0</version>
 		</dependency>
 
 		<dependency>
@@ -244,6 +259,16 @@
 			<artifactId>jsoup</artifactId>
 			<version>1.8.1</version>
 		</dependency>
+		<dependency>
+			<groupId>org.dkpro.tc</groupId>
+			<artifactId>dkpro-tc-ml-svmhmm</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.dkpro.tc</groupId>
+			<artifactId>dkpro-tc-ml</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+		</dependency>
 
 	</dependencies>
 
@@ -269,8 +294,8 @@
 
 			<dependency>
 				<groupId>org.apache.commons</groupId>
-				<artifactId>commons-lang3</artifactId>
-				<version>3.3.1</version>
+				<artifactId>commons-csv</artifactId>
+				<version>1.5</version>
 			</dependency>
 
 			<dependency>

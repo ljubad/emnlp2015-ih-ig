@@ -21,15 +21,16 @@ package de.tudarmstadt.ukp.experiments.argumentation.sequence.feature.deeplearni
 import de.tudarmstadt.ukp.experiments.argumentation.sequence.feature.AbstractUnitSentenceFeatureGenerator;
 import de.tudarmstadt.ukp.dkpro.argumentation.type.Embeddings;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence;
-import de.tudarmstadt.ukp.dkpro.tc.api.exception.TextClassificationException;
-import de.tudarmstadt.ukp.dkpro.tc.api.features.Feature;
 import no.uib.cipr.matrix.DenseVector;
 import org.apache.commons.lang.StringUtils;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
+import org.dkpro.tc.api.exception.TextClassificationException;
+import org.dkpro.tc.api.features.Feature;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Ivan Habernal
@@ -41,7 +42,7 @@ public class EmbeddingFeatures
     private static final String FEATURE_NAME = "_wordEmbedding_";
 
     @Override
-    protected List<Feature> extract(JCas jCas, Sentence sentence, String sentencePrefix)
+    protected Set<Feature> extract(JCas jCas, Sentence sentence, String sentencePrefix)
             throws TextClassificationException
     {
         // and load the appropriate distance to centroids
@@ -58,7 +59,7 @@ public class EmbeddingFeatures
         Embeddings embeddings = embeddingsList.iterator().next();
         DenseVector embeddingsVector = new DenseVector(embeddings.getVector().toArray());
 
-        List<Feature> result = new ArrayList<>(embeddingsVector.size());
+        Set<Feature> result = new HashSet<>(embeddingsVector.size());
 
         for (int i = 0; i < embeddingsVector.size(); i++) {
             double entry = embeddingsVector.get(i);

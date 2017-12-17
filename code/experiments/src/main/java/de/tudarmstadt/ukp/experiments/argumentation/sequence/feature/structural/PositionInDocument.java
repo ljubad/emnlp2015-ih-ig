@@ -20,14 +20,14 @@ package de.tudarmstadt.ukp.experiments.argumentation.sequence.feature.structural
 
 import de.tudarmstadt.ukp.experiments.argumentation.sequence.feature.AbstractUnitSentenceFeatureGenerator;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence;
-import de.tudarmstadt.ukp.dkpro.tc.api.exception.TextClassificationException;
-import de.tudarmstadt.ukp.dkpro.tc.api.features.Feature;
+//import de.tudarmstadt.ukp.dkpro.tc.api.exception.TextClassificationException;
+//import de.tudarmstadt.ukp.dkpro.tc.api.features.Feature;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
+import org.dkpro.tc.api.exception.TextClassificationException;
+import org.dkpro.tc.api.features.Feature;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 /**
  * Returns relative position of sentence in document and two boolean values: first sentence
@@ -43,10 +43,10 @@ public class PositionInDocument
     private static final String FN_LAST_SENTENCE_IN_DOCUMENT = "isLastSentenceInDocument";
 
     @Override
-    protected List<Feature> extract(JCas jCas, Sentence sentence, String sentencePrefix)
+    protected Set<Feature> extract(JCas jCas, Sentence sentence, String sentencePrefix)
             throws TextClassificationException
     {
-        List<Feature> result = new ArrayList<>();
+        Set<Feature> result = new HashSet<>();
 
         int positionInDocument = 0;
         boolean firstSentenceInDocument = false;

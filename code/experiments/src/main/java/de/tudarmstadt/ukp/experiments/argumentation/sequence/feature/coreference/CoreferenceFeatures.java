@@ -25,8 +25,8 @@ import de.tudarmstadt.ukp.dkpro.core.api.coref.type.CoreferenceLink;
 import de.tudarmstadt.ukp.dkpro.core.api.frequency.util.FrequencyDistribution;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token;
-import de.tudarmstadt.ukp.dkpro.tc.api.exception.TextClassificationException;
-import de.tudarmstadt.ukp.dkpro.tc.api.features.Feature;
+import org.dkpro.tc.api.exception.TextClassificationException;
+import org.dkpro.tc.api.features.Feature;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.math.stat.descriptive.DescriptiveStatistics;
 import org.apache.log4j.Logger;
@@ -41,10 +41,7 @@ import org.apache.uima.jcas.JCas;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.SortedMap;
-import java.util.TreeMap;
+import java.util.*;
 
 import static org.apache.uima.fit.util.JCasUtil.select;
 
@@ -88,7 +85,7 @@ public class CoreferenceFeatures
     static Logger log = Logger.getLogger(CoreferenceFeatures.class);
 
     @Override
-    protected List<Feature> extract(JCas jCas, Sentence sentence, String sentencePrefix)
+    protected Set<Feature> extract(JCas jCas, Sentence sentence, String sentencePrefix)
             throws TextClassificationException
     {
         List<List<CoreferenceLink>> coreferenceChains = extractCoreferenceChains(jCas);
@@ -284,7 +281,7 @@ public class CoreferenceFeatures
             */
         }
 
-        List<Feature> result = new ArrayList<>();
+        Set<Feature> result = new HashSet<>();
 
         log.debug(featuresAcrossAllChains);
         if (distanceToNextSentence.getN() > 0) {
@@ -454,7 +451,7 @@ public class CoreferenceFeatures
         {
             for (Sentence sentence : select(aJCas, Sentence.class)) {
                 try {
-                    List<Feature> features = new CoreferenceFeatures().extract(aJCas, sentence, "");
+                    Set<Feature> features = new CoreferenceFeatures().extract(aJCas, sentence, "");
                     log.debug(features);
                 }
                 catch (TextClassificationException e) {

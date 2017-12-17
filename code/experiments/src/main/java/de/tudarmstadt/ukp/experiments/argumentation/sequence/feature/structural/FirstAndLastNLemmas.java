@@ -22,13 +22,14 @@ import de.tudarmstadt.ukp.experiments.argumentation.sequence.feature.AbstractUni
 import de.tudarmstadt.ukp.dkpro.core.api.frequency.util.FrequencyDistribution;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token;
-import de.tudarmstadt.ukp.dkpro.tc.api.exception.TextClassificationException;
-import de.tudarmstadt.ukp.dkpro.tc.api.features.Feature;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
+import org.dkpro.tc.api.exception.TextClassificationException;
+import org.dkpro.tc.api.features.Feature;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Ivan Habernal
@@ -42,10 +43,10 @@ public class FirstAndLastNLemmas
     private static final String FEATURE_PREFIX_LAST = "last" + FIRST_LAST_N_LEMMAS + "lemmas";
 
     @Override
-    protected List<Feature> extract(JCas jCas, Sentence sentence, String sentencePrefix)
+    protected Set<Feature> extract(JCas jCas, Sentence sentence, String sentencePrefix)
             throws TextClassificationException
     {
-        List<Feature> result = new ArrayList<>();
+        Set<Feature> result = new HashSet<>();
         List<Token> tokens = JCasUtil.selectCovered(Token.class, sentence);
 
         FrequencyDistribution<String> firstLemmas = new FrequencyDistribution<>();

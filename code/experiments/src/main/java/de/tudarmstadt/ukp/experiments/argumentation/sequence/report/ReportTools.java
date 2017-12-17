@@ -19,8 +19,8 @@
 package de.tudarmstadt.ukp.experiments.argumentation.sequence.report;
 
 import de.tudarmstadt.ukp.dkpro.argumentation.preprocessing.annotation.ArgumentBIOAnnotator;
-import de.tudarmstadt.ukp.dkpro.tc.svmhmm.util.ConfusionMatrix;
 import org.apache.commons.io.IOUtils;
+import org.dkpro.tc.ml.svmhmm.util.ConfusionMatrix;
 
 import java.io.File;
 import java.io.IOException;

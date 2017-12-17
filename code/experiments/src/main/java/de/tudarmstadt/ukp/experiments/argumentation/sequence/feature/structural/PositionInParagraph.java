@@ -22,15 +22,13 @@ import de.tudarmstadt.ukp.dkpro.argumentation.misc.uima.JCasUtil2;
 import de.tudarmstadt.ukp.experiments.argumentation.sequence.feature.AbstractUnitSentenceFeatureGenerator;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Paragraph;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence;
-import de.tudarmstadt.ukp.dkpro.tc.api.exception.TextClassificationException;
-import de.tudarmstadt.ukp.dkpro.tc.api.features.Feature;
 import org.apache.log4j.Logger;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
+import org.dkpro.tc.api.exception.TextClassificationException;
+import org.dkpro.tc.api.features.Feature;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 /**
  * Returns two values -- first sentence in paragraph, last sentence in paragraph, and relative
@@ -50,10 +48,10 @@ public class PositionInParagraph
     static Logger log = Logger.getLogger(PositionInParagraph.class);
 
     @Override
-    protected List<Feature> extract(JCas jCas, Sentence sentence, String sentencePrefix)
+    protected Set<Feature> extract(JCas jCas, Sentence sentence, String sentencePrefix)
             throws TextClassificationException
     {
-        List<Feature> result = new ArrayList<>();
+        Set<Feature> result = new HashSet<>();
 
         int positionInParagraph = 0;
         boolean firstSentenceInParagraph = false;

@@ -18,20 +18,19 @@
 
 package de.tudarmstadt.ukp.experiments.argumentation.sequence.feature.lexical;
 
-import de.tudarmstadt.ukp.dkpro.tc.api.features.meta.MetaCollector;
-import de.tudarmstadt.ukp.dkpro.tc.features.ngram.base.LuceneFeatureExtractorBase;
+import org.dkpro.tc.api.features.meta.MetaCollector;
+import org.dkpro.tc.features.ngram.base.LuceneFeatureExtractorBase;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public abstract class LemmaLuceneNgramFeatureExtractorBase
         extends LuceneFeatureExtractorBase
 {
 
-    @Override
-    public List<Class<? extends MetaCollector>> getMetaCollectorClasses()
+    public Set<Class<? extends MetaCollector>> getMetaCollectorClasses()
     {
-        List<Class<? extends MetaCollector>> metaCollectorClasses = new ArrayList<>();
+        Set<Class<? extends MetaCollector>> metaCollectorClasses = new HashSet<>();
         metaCollectorClasses.add(LemmaLuceneNGramMetaCollector.class);
 
         return metaCollectorClasses;

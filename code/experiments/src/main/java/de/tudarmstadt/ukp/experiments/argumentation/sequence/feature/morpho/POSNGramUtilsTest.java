@@ -18,8 +18,8 @@
 
 package de.tudarmstadt.ukp.experiments.argumentation.sequence.feature.morpho;
 
-import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.NN;
-import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.V;
+//import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.NN;
+//import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.V;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token;
 import org.apache.uima.fit.component.CasDumpWriter;
@@ -32,39 +32,39 @@ import org.junit.Test;
 public class POSNGramUtilsTest
 {
 
-    @Test
-    public void testGetPOSNGrams()
-            throws Exception
-    {
-        String text = "NN V NN";
-        JCas jcas = JCasFactory.createJCas();
-        jcas.setDocumentLanguage("en");
-        jcas.setDocumentText(text);
-
-        Sentence s = new Sentence(jcas, 0, 7);
-        s.addToIndexes();
-
-        NN nn = new NN(jcas, 0, 2);
-        nn.addToIndexes();
-        Token t1 = new Token(jcas, 0, 2);
-        t1.addToIndexes();
-        t1.setPos(nn);
-
-        V v = new V(jcas, 3, 4);
-        v.addToIndexes();
-        Token t2 = new Token(jcas, 3, 4);
-        t2.addToIndexes();
-        t2.setPos(v);
-
-        NN nn2 = new NN(jcas, 5, 7);
-        nn2.addToIndexes();
-        Token t3 = new Token(jcas, 5, 7);
-        t3.addToIndexes();
-        t3.setPos(nn2);
-
-        SimplePipeline.runPipeline(jcas,
-                AnalysisEngineFactory.createEngineDescription(CasDumpWriter.class));
-
-        System.out.println(POSNgram.getSentencePosNGrams(jcas, 1, 3, true, s));
-    }
+//    @Test
+//    public void testGetPOSNGrams()
+//            throws Exception
+//    {
+//        String text = "NN V NN";
+//        JCas jcas = JCasFactory.createJCas();
+//        jcas.setDocumentLanguage("en");
+//        jcas.setDocumentText(text);
+//
+//        Sentence s = new Sentence(jcas, 0, 7);
+//        s.addToIndexes();
+//
+//        NN nn = new NN(jcas, 0, 2);
+//        nn.addToIndexes();
+//        Token t1 = new Token(jcas, 0, 2);
+//        t1.addToIndexes();
+//        t1.setPos(nn);
+//
+//        V v = new V(jcas, 3, 4);
+//        v.addToIndexes();
+//        Token t2 = new Token(jcas, 3, 4);
+//        t2.addToIndexes();
+//        t2.setPos(v);
+//
+//        NN nn2 = new NN(jcas, 5, 7);
+//        nn2.addToIndexes();
+//        Token t3 = new Token(jcas, 5, 7);
+//        t3.addToIndexes();
+//        t3.setPos(nn2);
+//
+//        SimplePipeline.runPipeline(jcas,
+//                AnalysisEngineFactory.createEngineDescription(CasDumpWriter.class));
+//
+//        System.out.println(POSNgram.getSentencePosNGrams(jcas, 1, 3, true, s));
+//    }
 }

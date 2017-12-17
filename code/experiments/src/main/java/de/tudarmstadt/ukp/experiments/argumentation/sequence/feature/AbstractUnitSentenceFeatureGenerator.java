@@ -20,18 +20,15 @@ package de.tudarmstadt.ukp.experiments.argumentation.sequence.feature;
 
 import de.tudarmstadt.ukp.dkpro.argumentation.misc.uima.JCasUtil2;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence;
-import de.tudarmstadt.ukp.dkpro.tc.api.exception.TextClassificationException;
-import de.tudarmstadt.ukp.dkpro.tc.api.features.ClassificationUnitFeatureExtractor;
-import de.tudarmstadt.ukp.dkpro.tc.api.features.Feature;
-import de.tudarmstadt.ukp.dkpro.tc.api.features.FeatureExtractorResource_ImplBase;
-import de.tudarmstadt.ukp.dkpro.tc.api.type.TextClassificationUnit;
+import org.dkpro.tc.api.exception.TextClassificationException;
+import org.dkpro.tc.api.features.Feature;
+import org.dkpro.tc.api.features.FeatureExtractor;
+import org.dkpro.tc.api.type.TextClassificationTarget;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
+import org.dkpro.tc.api.features.FeatureExtractorResource_ImplBase;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Abstract feature generator that ensures the unit is a single sentence and automatically filters
@@ -41,7 +38,7 @@ import java.util.Map;
  */
 public abstract class AbstractUnitSentenceFeatureGenerator
         extends FeatureExtractorResource_ImplBase
-        implements ClassificationUnitFeatureExtractor
+        implements FeatureExtractor
 {
 
     //    private static final String MINUS_2_SENT = "minus2Sent";
@@ -65,7 +62,7 @@ public abstract class AbstractUnitSentenceFeatureGenerator
      * @throws TextClassificationException If zero of more than one
      *                                     sentences is found
      */
-    public static Sentence selectSentence(TextClassificationUnit classificationUnit)
+    public static Sentence selectSentence(TextClassificationTarget classificationUnit)
             throws TextClassificationException
     {
         List<Sentence> sentences = JCasUtil.selectCovering(Sentence.class, classificationUnit);
@@ -79,7 +76,7 @@ public abstract class AbstractUnitSentenceFeatureGenerator
     }
 
     @Override
-    public List<Feature> extract(JCas jCas, TextClassificationUnit classificationUnit)
+    public Set<Feature> extract(JCas jCas, TextClassificationTarget classificationUnit)
             throws TextClassificationException
     {
         Sentence sentence = selectSentence(classificationUnit);
@@ -156,7 +153,7 @@ public abstract class AbstractUnitSentenceFeatureGenerator
         */
 
         // extract features from this sentence
-        List<Feature> result = extract(jCas, sentence, "");
+        Set<Feature> result = extract(jCas, sentence, "");
 
         // and co-occurring sentences
         for (Map.Entry<String, Sentence> entry : contextSentences.entrySet()) {
@@ -196,6 +193,6 @@ public abstract class AbstractUnitSentenceFeatureGenerator
      * @param sentencePrefix prefix of sentence for prefixing all features (might be empty)
      * @return list of features
      */
-    protected abstract List<Feature> extract(JCas jCas, Sentence sentence, String sentencePrefix)
+    protected abstract Set<Feature> extract(JCas jCas, Sentence sentence, String sentencePrefix)
             throws TextClassificationException;
 }

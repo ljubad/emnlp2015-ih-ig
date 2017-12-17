@@ -19,10 +19,10 @@
 package de.tudarmstadt.ukp.experiments.argumentation.sequence.feature.meta;
 
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token;
-import de.tudarmstadt.ukp.dkpro.tc.api.type.TextClassificationUnit;
-import de.tudarmstadt.ukp.dkpro.tc.svmhmm.writer.SVMHMMDataWriter;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
+import org.dkpro.tc.api.type.TextClassificationTarget;
+import org.dkpro.tc.ml.svmhmm.writer.SVMHMMDataWriter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +38,7 @@ public class OrigTokenSequenceMetaDataFeatureGenerator
             + OrigTokenSequenceMetaDataFeatureGenerator.class.getSimpleName();
 
     @Override
-    protected List<String> extractSequence(JCas jCas, TextClassificationUnit classificationUnit)
+    protected List<String> extractSequence(JCas jCas, TextClassificationTarget classificationUnit)
     {
         List<String> result = new ArrayList<>();
 

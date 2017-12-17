@@ -27,10 +27,6 @@ import de.tudarmstadt.ukp.dkpro.core.api.resources.CompressionUtils;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence;
 import de.tudarmstadt.ukp.dkpro.core.api.syntax.type.constituent.ROOT;
 import de.tudarmstadt.ukp.dkpro.core.io.xmi.XmiReader;
-import de.tudarmstadt.ukp.dkpro.tc.api.io.TCReaderSequence;
-import de.tudarmstadt.ukp.dkpro.tc.api.type.TextClassificationOutcome;
-import de.tudarmstadt.ukp.dkpro.tc.api.type.TextClassificationSequence;
-import de.tudarmstadt.ukp.dkpro.tc.api.type.TextClassificationUnit;
 import org.apache.commons.io.IOUtils;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
@@ -47,6 +43,10 @@ import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.util.CasCreationUtils;
+import org.dkpro.tc.api.io.TCReaderSequence;
+import org.dkpro.tc.api.type.TextClassificationOutcome;
+import org.dkpro.tc.api.type.TextClassificationSequence;
+import org.dkpro.tc.api.type.TextClassificationTarget;
 import org.xml.sax.SAXException;
 
 import java.io.IOException;
@@ -140,7 +140,7 @@ public class ArgumentSequenceSentenceLevelReader
 
             String outcomeLabel = getTag(sentence);
 
-            TextClassificationUnit unit = new TextClassificationUnit(jCas, sentence.getBegin(),
+            TextClassificationTarget unit = new TextClassificationTarget(jCas, sentence.getBegin(),
                     sentence.getEnd());
             unit.addToIndexes();
 
@@ -244,7 +244,7 @@ public class ArgumentSequenceSentenceLevelReader
 
     @Override
     public String getTextClassificationOutcome(JCas jCas,
-            TextClassificationUnit textClassificationUnit)
+            TextClassificationTarget textClassificationUnit)
             throws CollectionException
     {
         return null;

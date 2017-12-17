@@ -20,12 +20,6 @@ package de.tudarmstadt.ukp.experiments.argumentation.sequence.feature.lexical;
 
 import de.tudarmstadt.ukp.dkpro.core.api.frequency.util.FrequencyDistribution;
 import de.tudarmstadt.ukp.dkpro.core.api.metadata.type.DocumentMetaData;
-import de.tudarmstadt.ukp.dkpro.tc.api.exception.TextClassificationException;
-import de.tudarmstadt.ukp.dkpro.tc.api.features.meta.MetaCollector;
-import de.tudarmstadt.ukp.dkpro.tc.api.features.util.FeatureUtil;
-import de.tudarmstadt.ukp.dkpro.tc.features.ngram.LuceneNGramDFE;
-import de.tudarmstadt.ukp.dkpro.tc.features.ngram.base.LuceneFeatureExtractorBase;
-import de.tudarmstadt.ukp.dkpro.tc.features.ngram.base.NGramFeatureExtractorBase;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.FieldType;
@@ -41,6 +35,12 @@ import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
+import org.dkpro.tc.api.exception.TextClassificationException;
+import org.dkpro.tc.api.features.meta.MetaCollector;
+import org.dkpro.tc.api.features.util.FeatureUtil;
+import org.dkpro.tc.features.ngram.LuceneNGram;
+import org.dkpro.tc.features.ngram.base.LuceneFeatureExtractorBase;
+import org.dkpro.tc.features.ngram.base.NGramFeatureExtractorBase;
 
 import java.io.File;
 import java.io.IOException;
@@ -78,7 +78,7 @@ public class LemmaLuceneNGramMetaCollector
 
     public static final String LUCENE_ID_FIELD = "id";
 
-    @ConfigurationParameter(name = LuceneFeatureExtractorBase.PARAM_LUCENE_DIR, mandatory = true)
+    @ConfigurationParameter(name = LuceneFeatureExtractorBase.PARAM_SOURCE_LOCATION, mandatory = true)
     private File luceneDir;
 
     // this is a static singleton as different Lucene-based meta collectors will use the same writer
@@ -181,11 +181,10 @@ public class LemmaLuceneNGramMetaCollector
 
     }
 
-    @Override
     public Map<String, String> getParameterKeyPairs()
     {
         Map<String, String> mapping = new HashMap<>();
-        mapping.put(LuceneNGramDFE.PARAM_LUCENE_DIR, LUCENE_DIR);
+        mapping.put(LuceneNGram.PARAM_SOURCE_LOCATION, LUCENE_DIR);
         return mapping;
     }
 
@@ -244,6 +243,6 @@ public class LemmaLuceneNGramMetaCollector
 
     protected String getFieldName()
     {
-        return LuceneNGramDFE.LUCENE_NGRAM_FIELD;
+        return LuceneNGram.LUCENE_NGRAM_FIELD;
     }
 }

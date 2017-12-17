@@ -18,14 +18,14 @@
 
 package de.tudarmstadt.ukp.experiments.argumentation.sequence.evaluation;
 
-import de.tudarmstadt.ukp.dkpro.tc.svmhmm.util.ConfusionMatrix;
-import de.tudarmstadt.ukp.dkpro.tc.svmhmm.util.SVMHMMUtils;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.csv.CSVRecord;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
+import org.dkpro.tc.ml.svmhmm.util.ConfusionMatrix;
+import org.dkpro.tc.ml.svmhmm.util.SVMHMMUtils;
 
 import java.io.*;
 

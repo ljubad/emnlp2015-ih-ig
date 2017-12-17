@@ -22,7 +22,7 @@ import cc.mallet.types.TokenSequence;
 import de.tudarmstadt.ukp.dkpro.core.api.featurepath.FeaturePathException;
 import de.tudarmstadt.ukp.dkpro.core.api.featurepath.FeaturePathFactory;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Lemma;
-import de.tudarmstadt.ukp.dkpro.core.mallet.topicmodel.MalletTopicModelEstimator;
+import de.tudarmstadt.ukp.dkpro.core.mallet.MalletModelTrainer;
 import org.apache.commons.io.IOUtils;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
@@ -38,13 +38,15 @@ import java.io.ObjectInputStream;
 import java.util.Map;
 import java.util.Set;
 
+import static de.tudarmstadt.ukp.dkpro.core.mallet.lda.MalletLdaTopicModelInferencer.PARAM_TYPE_NAME;
+import static de.tudarmstadt.ukp.experiments.argumentation.comments.pipeline.VocabularyCollector.PARAM_USE_LEMMA;
 import static org.apache.uima.fit.util.JCasUtil.selectCovered;
 
 /**
  * @author Ivan Habernal
  */
 public class ExtendedMalletTopicModelEstimator
-        extends MalletTopicModelEstimator
+        extends MalletModelTrainer
 {
     public static final String PARAM_VOCABULARY_FILE = "vocabularyFile";
     @ConfigurationParameter(name = PARAM_VOCABULARY_FILE, mandatory = true)
@@ -85,7 +87,6 @@ public class ExtendedMalletTopicModelEstimator
         }
     }
 
-    @Override
     protected TokenSequence generateTokenSequence(JCas aJCas)
             throws AnalysisEngineProcessException
     {

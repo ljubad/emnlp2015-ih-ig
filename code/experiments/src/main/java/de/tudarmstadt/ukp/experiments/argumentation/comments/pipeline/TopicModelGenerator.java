@@ -19,6 +19,7 @@
 package de.tudarmstadt.ukp.experiments.argumentation.comments.pipeline;
 
 import cc.mallet.topics.ParallelTopicModel;
+import de.tudarmstadt.ukp.dkpro.core.mallet.lda.MalletLdaTopicModelTrainer;
 import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordLemmatizer;
 import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordSegmenter;
 import org.apache.uima.fit.factory.AnalysisEngineFactory;
@@ -85,12 +86,11 @@ public class TopicModelGenerator
                 AnalysisEngineFactory.createEngineDescription(StanfordLemmatizer.class),
                 AnalysisEngineFactory
                         .createEngineDescription(ExtendedMalletTopicModelEstimator.class,
-                                ExtendedMalletTopicModelEstimator.PARAM_N_THREADS, N_THREADS,
-                                ExtendedMalletTopicModelEstimator.PARAM_TARGET_LOCATION,
-                                topicModelFile,
-                                ExtendedMalletTopicModelEstimator.PARAM_N_ITERATIONS, ITERATIONS,
-                                ExtendedMalletTopicModelEstimator.PARAM_N_TOPICS, nTopics,
-                                ExtendedMalletTopicModelEstimator.PARAM_USE_LEMMA, true,
+                                ExtendedMalletTopicModelEstimator.PARAM_NUM_THREADS, N_THREADS,
+                                ExtendedMalletTopicModelEstimator.PARAM_TARGET_LOCATION, topicModelFile,
+                                MalletLdaTopicModelTrainer.PARAM_N_ITERATIONS, ITERATIONS,
+                                MalletLdaTopicModelTrainer.PARAM_N_TOPICS, nTopics,
+//                                ExtendedMalletTopicModelEstimator.PARAM_USE_LEMMA, true,
                                 ExtendedMalletTopicModelEstimator.PARAM_VOCABULARY_FILE,
                                 vocabularyFile));
 

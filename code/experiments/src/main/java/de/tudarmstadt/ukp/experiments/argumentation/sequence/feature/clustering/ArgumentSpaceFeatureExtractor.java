@@ -23,8 +23,8 @@ import de.tudarmstadt.ukp.experiments.argumentation.sequence.feature.AbstractUni
 import de.tudarmstadt.ukp.dkpro.argumentation.type.Embeddings;
 import de.tudarmstadt.ukp.dkpro.core.api.resources.ResourceUtils;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence;
-import de.tudarmstadt.ukp.dkpro.tc.api.exception.TextClassificationException;
-import de.tudarmstadt.ukp.dkpro.tc.api.features.Feature;
+import org.dkpro.tc.api.exception.TextClassificationException;
+import org.dkpro.tc.api.features.Feature;
 import no.uib.cipr.matrix.DenseVector;
 import no.uib.cipr.matrix.Vector;
 import org.apache.commons.io.IOUtils;
@@ -128,7 +128,7 @@ public class ArgumentSpaceFeatureExtractor
     }
 
     @Override
-    protected List<Feature> extract(JCas jCas, Sentence sentence, String sentencePrefix)
+    protected Set<Feature> extract(JCas jCas, Sentence sentence, String sentencePrefix)
             throws TextClassificationException
     {
         // and load the appropriate distance to centroids
@@ -145,7 +145,7 @@ public class ArgumentSpaceFeatureExtractor
         Embeddings embeddings = embeddingsList.iterator().next();
         DenseVector embeddingsVector = new DenseVector(embeddings.getVector().toArray());
 
-        List<Feature> result = new ArrayList<>();
+        Set<Feature> result = new HashSet<>();
 
         for (String clusterType : activeCentroids.keySet()) {
             Vector distanceToClusterCentroidsVector = ClusteringUtils

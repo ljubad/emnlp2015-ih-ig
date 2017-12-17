@@ -21,13 +21,14 @@ package de.tudarmstadt.ukp.experiments.argumentation.sequence.feature.surface;
 import de.tudarmstadt.ukp.experiments.argumentation.sequence.feature.AbstractUnitSentenceFeatureGenerator;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token;
-import de.tudarmstadt.ukp.dkpro.tc.api.exception.TextClassificationException;
-import de.tudarmstadt.ukp.dkpro.tc.api.features.Feature;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
+import org.dkpro.tc.api.exception.TextClassificationException;
+import org.dkpro.tc.api.features.Feature;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Features: sentence length (tokens, characters), count and ratio of words with more than 6 letters
@@ -45,7 +46,7 @@ public class SurfaceFeaturesGenerator
 {
 
     @Override
-    protected List<Feature> extract(JCas jCas, Sentence jcas, String sentencePrefix)
+    protected Set<Feature> extract(JCas jCas, Sentence jcas, String sentencePrefix)
             throws TextClassificationException
     {
         // Post length in letters
@@ -69,7 +70,7 @@ public class SurfaceFeaturesGenerator
             sixLettersWordsRatio = nbMoreSixLetters / wordPerSentence;
         }
 
-        List<Feature> featList = new ArrayList<>();
+        Set<Feature> featList = new HashSet<>();
         featList.add(new Feature(sentencePrefix + "sentence_length", postLength));
         featList.add(new Feature(sentencePrefix + "word_per_sentence", wordPerSentence));
         featList.add(new Feature(sentencePrefix + "word_more_6_letters", nbMoreSixLetters));

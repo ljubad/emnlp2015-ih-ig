@@ -23,15 +23,13 @@ import de.tudarmstadt.ukp.dkpro.core.api.frequency.util.FrequencyDistribution;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence;
 import de.tudarmstadt.ukp.dkpro.core.api.syntax.type.constituent.ROOT;
 import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.util.TreeUtils;
-import de.tudarmstadt.ukp.dkpro.tc.api.exception.TextClassificationException;
-import de.tudarmstadt.ukp.dkpro.tc.api.features.Feature;
 import edu.stanford.nlp.trees.Tree;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
+import org.dkpro.tc.api.exception.TextClassificationException;
+import org.dkpro.tc.api.features.Feature;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author Ivan Habernal
@@ -44,10 +42,10 @@ public class ProductionRules
     public static final String FN_PRODUCTION_RULE = "ProductionRule_";
 
     @Override
-    protected List<Feature> extract(JCas jCas, Sentence sentence, String sentencePrefix)
+    protected Set<Feature> extract(JCas jCas, Sentence sentence, String sentencePrefix)
             throws TextClassificationException
     {
-        List<Feature> result = new ArrayList<>();
+        Set<Feature> result = new HashSet<>();
 
         FrequencyDistribution<String> rules = new FrequencyDistribution<>();
         Collection<ROOT> root = JCasUtil.selectCovered(ROOT.class, sentence);

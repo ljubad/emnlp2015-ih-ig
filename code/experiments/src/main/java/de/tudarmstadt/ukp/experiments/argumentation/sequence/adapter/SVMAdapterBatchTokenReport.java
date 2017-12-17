@@ -18,9 +18,10 @@
 
 package de.tudarmstadt.ukp.experiments.argumentation.sequence.adapter;
 
+
 import de.tudarmstadt.ukp.experiments.argumentation.sequence.report.TokenLevelBatchCrossValidationReport;
-import de.tudarmstadt.ukp.dkpro.lab.reporting.ReportBase;
-import de.tudarmstadt.ukp.dkpro.tc.svmhmm.SVMHMMAdapter;
+import org.dkpro.lab.reporting.ReportBase;
+import org.dkpro.tc.ml.svmhmm.SVMHMMAdapter;
 
 /**
  * @author Ivan Habernal
@@ -29,7 +30,6 @@ public class SVMAdapterBatchTokenReport
         extends SVMHMMAdapter
 {
 
-    @Override
     public Class<? extends ReportBase> getBatchTrainTestReportClass()
     {
         return TokenLevelBatchCrossValidationReport.class;

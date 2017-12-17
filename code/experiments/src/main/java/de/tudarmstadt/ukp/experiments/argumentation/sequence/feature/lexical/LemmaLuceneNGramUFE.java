@@ -19,30 +19,30 @@
 package de.tudarmstadt.ukp.experiments.argumentation.sequence.feature.lexical;
 
 import de.tudarmstadt.ukp.dkpro.core.api.frequency.util.FrequencyDistribution;
-import de.tudarmstadt.ukp.dkpro.tc.api.exception.TextClassificationException;
-import de.tudarmstadt.ukp.dkpro.tc.api.features.ClassificationUnitFeatureExtractor;
-import de.tudarmstadt.ukp.dkpro.tc.api.features.Feature;
-import de.tudarmstadt.ukp.dkpro.tc.api.type.TextClassificationUnit;
 import org.apache.uima.fit.descriptor.TypeCapability;
 import org.apache.uima.jcas.JCas;
+import org.dkpro.tc.api.exception.TextClassificationException;
+import org.dkpro.tc.api.features.Feature;
+import org.dkpro.tc.api.features.FeatureExtractor;
+import org.dkpro.tc.api.type.TextClassificationTarget;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Extracts token n-grams within the given text classification unit
  */
 @TypeCapability(inputs = { "de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence",
-        "de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token" }) public class LemmaLuceneNGramUFE
+        "de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token" }) public abstract class LemmaLuceneNGramUFE
         extends LemmaLuceneNgramFeatureExtractorBase
-        implements ClassificationUnitFeatureExtractor
+        implements FeatureExtractor
 {
 
     @Override
-    public List<Feature> extract(JCas jcas, TextClassificationUnit classificationUnit)
+    public Set<Feature> extract(JCas jcas, TextClassificationTarget classificationUnit)
             throws TextClassificationException
     {
-        List<Feature> features = new ArrayList<>();
+        Set<Feature> features = new HashSet<>();
         FrequencyDistribution<String> documentNGrams = LemmaNGramUtils
                 .getAnnotationNGrams(jcas, classificationUnit, ngramLowerCase,
                         filterPartialStopwordMatches, ngramMinN, ngramMaxN, stopwords);
@@ -55,4 +55,13 @@ import java.util.List;
 
         return features;
     }
+
+//    @Override
+//    public List<MetaCollectorConfiguration> getMetaCollectorClasses(Map<String, Object> parameterSettings) throws ResourceInitializationException {
+//        return Collections.singletonList(new MetaCollectorConfiguration(LuceneSkipNgramMetaCollector.class,
+//                parameterSettings).addStorageMapping(
+//                LuceneSkipNgramMetaCollector.PARAM_TARGET_LOCATION,
+//                LuceneSkipNGram.PARAM_SOURCE_LOCATION,
+//                LuceneSkipNgramMetaCollector.LUCENE_DIR));
+//    }
 }

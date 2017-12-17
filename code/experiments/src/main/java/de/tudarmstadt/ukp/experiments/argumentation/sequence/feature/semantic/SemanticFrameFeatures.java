@@ -23,10 +23,10 @@ import de.tudarmstadt.ukp.dkpro.core.api.frequency.util.FrequencyDistribution;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence;
 import de.tudarmstadt.ukp.dkpro.core.api.semantics.type.SemanticArgument;
 import de.tudarmstadt.ukp.dkpro.core.api.semantics.type.SemanticPredicate;
-import de.tudarmstadt.ukp.dkpro.tc.api.exception.TextClassificationException;
-import de.tudarmstadt.ukp.dkpro.tc.api.features.Feature;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
+import org.dkpro.tc.api.exception.TextClassificationException;
+import org.dkpro.tc.api.features.Feature;
 
 import java.util.*;
 
@@ -41,10 +41,10 @@ public class SemanticFrameFeatures
     private static final String FEATURE_NAME = "semanticProbBankRoleFeature";
 
     @Override
-    protected List<Feature> extract(JCas jcas, Sentence sentence, String sentencePrefix)
+    protected Set<Feature> extract(JCas jcas, Sentence sentence, String sentencePrefix)
             throws TextClassificationException
     {
-        List<Feature> result = new ArrayList<>();
+        Set<Feature> result = new HashSet<>();
 
         FrequencyDistribution<String> semanticFeatures = new FrequencyDistribution<>();
 

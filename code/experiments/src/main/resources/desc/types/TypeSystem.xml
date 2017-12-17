@@ -509,7 +509,7 @@
             <description/>
             <supertypeName>de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.POS_X</supertypeName>
         </typeDescription>
-        <typeDescription>
+        <!--<typeDescription>
             <name>de.tudarmstadt.ukp.dkpro.core.api.metadata.type.DocumentMetaData</name>
             <description/>
             <supertypeName>uima.tcas.DocumentAnnotation</supertypeName>
@@ -546,7 +546,7 @@
                 </featureDescription>
             </features>
         </typeDescription>
-        <typeDescription>
+-->        <typeDescription>
             <name>de.tudarmstadt.ukp.dkpro.core.api.metadata.type.MetaDataStringField</name>
             <description/>
             <supertypeName>uima.tcas.Annotation</supertypeName>

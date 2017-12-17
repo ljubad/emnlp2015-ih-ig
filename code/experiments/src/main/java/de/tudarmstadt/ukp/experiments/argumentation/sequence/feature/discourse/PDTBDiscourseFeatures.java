@@ -19,8 +19,8 @@
 package de.tudarmstadt.ukp.experiments.argumentation.sequence.feature.discourse;
 
 import de.tudarmstadt.ukp.dkpro.argumentation.misc.uima.JCasUtil2;
-import de.tudarmstadt.ukp.experiments.argumentation.sequence.feature.AbstractUnitSentenceFeatureGenerator;
 import de.tudarmstadt.ukp.dkpro.core.api.discourse.DiscourseDumpWriter;
+import de.tudarmstadt.ukp.experiments.argumentation.sequence.feature.AbstractUnitSentenceFeatureGenerator;
 import de.tudarmstadt.ukp.dkpro.core.api.frequency.util.FrequencyDistribution;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token;
@@ -29,19 +29,16 @@ import de.tudarmstadt.ukp.dkpro.core.discourse.pdtb.DiscourseAttribution;
 import de.tudarmstadt.ukp.dkpro.core.discourse.pdtb.DiscourseConnective;
 import de.tudarmstadt.ukp.dkpro.core.discourse.pdtb.DiscourseRelation;
 import de.tudarmstadt.ukp.dkpro.core.io.xmi.XmiReader;
-import de.tudarmstadt.ukp.dkpro.tc.api.exception.TextClassificationException;
-import de.tudarmstadt.ukp.dkpro.tc.api.features.Feature;
 import org.apache.commons.lang.StringUtils;
 import org.apache.uima.fit.factory.AnalysisEngineFactory;
 import org.apache.uima.fit.factory.CollectionReaderFactory;
 import org.apache.uima.fit.pipeline.SimplePipeline;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
+import org.dkpro.tc.api.exception.TextClassificationException;
+import org.dkpro.tc.api.features.Feature;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 /**
  * @author Ivan Habernal
@@ -56,10 +53,10 @@ public class PDTBDiscourseFeatures
     private static final String FN_ATTRIBUTION = "discourseAttribution_";
 
     @Override
-    protected List<Feature> extract(JCas jCas, Sentence sentence, String sentencePrefix)
+    protected Set<Feature> extract(JCas jCas, Sentence sentence, String sentencePrefix)
             throws TextClassificationException
     {
-        List<Feature> result = new ArrayList<>();
+        Set<Feature> result = new HashSet<>();
 
         FrequencyDistribution<String> discourseFeaturesFreq = new FrequencyDistribution<>();
         FrequencyDistribution<String> discourseFeaturesBinary = new FrequencyDistribution<>();

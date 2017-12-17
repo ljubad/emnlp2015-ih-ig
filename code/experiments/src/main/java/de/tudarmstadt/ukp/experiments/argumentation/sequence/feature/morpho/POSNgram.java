@@ -23,15 +23,17 @@ import de.tudarmstadt.ukp.dkpro.core.api.frequency.util.FrequencyDistribution;
 import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.POS;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence;
 import de.tudarmstadt.ukp.dkpro.core.ngrams.util.NGramStringListIterable;
-import de.tudarmstadt.ukp.dkpro.tc.api.exception.TextClassificationException;
-import de.tudarmstadt.ukp.dkpro.tc.api.features.Feature;
-import de.tudarmstadt.ukp.dkpro.tc.features.ngram.util.NGramUtils;
+import org.dkpro.tc.api.exception.TextClassificationException;
+import org.dkpro.tc.api.features.Feature;
 import org.apache.commons.lang.StringUtils;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
+import org.dkpro.tc.features.ngram.util.KeywordNGramUtils;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Extract POS-n-grams for classification units. Does not treat them binary, but emits the
@@ -46,10 +48,10 @@ public class POSNgram
     public static final String FEATURE_NAME = "_pos_ngram_";
 
     @Override
-    protected List<Feature> extract(JCas jCas, Sentence sentence, String sentencePrefix)
+    protected Set<Feature> extract(JCas jCas, Sentence sentence, String sentencePrefix)
             throws TextClassificationException
     {
-        List<Feature> result = new ArrayList<>();
+        Set<Feature> result = new HashSet<>();
         // extract post n-grams
         FrequencyDistribution<String> documentPOSNGrams = getSentencePosNGrams(jCas, 1, 3, true,
                 sentence);
@@ -79,7 +81,7 @@ public class POSNgram
         String[] posAsArray = posTagString.toArray(new String[posTagString.size()]);
 
         for (List<String> nGram : new NGramStringListIterable(posAsArray, minN, maxN)) {
-            result.inc(StringUtils.join(nGram, NGramUtils.NGRAM_GLUE));
+            result.inc(StringUtils.join(nGram, KeywordNGramUtils.GLUE));
 
         }
 

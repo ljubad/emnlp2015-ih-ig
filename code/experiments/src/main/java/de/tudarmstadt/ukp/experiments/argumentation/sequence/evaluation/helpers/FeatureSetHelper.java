@@ -35,7 +35,7 @@ import de.tudarmstadt.ukp.experiments.argumentation.sequence.feature.structural.
 import de.tudarmstadt.ukp.experiments.argumentation.sequence.feature.syntactic.DependencyTreeDepth;
 import de.tudarmstadt.ukp.experiments.argumentation.sequence.feature.syntactic.ProductionRules;
 import de.tudarmstadt.ukp.experiments.argumentation.sequence.feature.syntactic.SubClausesCount;
-import de.tudarmstadt.ukp.dkpro.tc.svmhmm.util.OriginalTextHolderFeatureExtractor;
+import org.dkpro.tc.ml.svmhmm.util.OriginalTextHolderFeatureExtractor;
 
 import java.util.*;
 

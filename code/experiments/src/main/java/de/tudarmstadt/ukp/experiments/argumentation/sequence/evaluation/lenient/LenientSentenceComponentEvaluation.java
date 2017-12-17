@@ -24,9 +24,9 @@ import de.tudarmstadt.ukp.experiments.argumentation.sequence.evaluation.JCasIOHe
 import de.tudarmstadt.ukp.dkpro.argumentation.types.ArgumentComponent;
 import de.tudarmstadt.ukp.dkpro.core.api.metadata.type.DocumentMetaData;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence;
-import de.tudarmstadt.ukp.dkpro.tc.svmhmm.util.ConfusionMatrix;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
+import org.dkpro.tc.ml.svmhmm.util.ConfusionMatrix;
 
 import java.io.File;
 import java.io.IOException;

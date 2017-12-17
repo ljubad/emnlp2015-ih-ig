@@ -21,10 +21,10 @@ package de.tudarmstadt.ukp.experiments.argumentation.sequence.report;
 import de.tudarmstadt.ukp.experiments.argumentation.sequence.feature.meta.AbstractSequenceMetaDataFeatureGenerator;
 import de.tudarmstadt.ukp.experiments.argumentation.sequence.feature.meta.OrigBIOTokenSequenceMetaDataFeatureGenerator;
 import de.tudarmstadt.ukp.experiments.argumentation.sequence.feature.meta.OrigTokenSequenceMetaDataFeatureGenerator;
-import de.tudarmstadt.ukp.dkpro.lab.storage.StorageService;
-import de.tudarmstadt.ukp.dkpro.tc.svmhmm.report.SVMHMMOutcomeIDReport;
-import de.tudarmstadt.ukp.dkpro.tc.svmhmm.util.ConfusionMatrix;
-import de.tudarmstadt.ukp.dkpro.tc.svmhmm.util.SVMHMMUtils;
+import org.dkpro.lab.storage.StorageService;
+import org.dkpro.tc.ml.svmhmm.report.SVMHMMOutcomeIDReport;
+import org.dkpro.tc.ml.svmhmm.util.ConfusionMatrix;
+import org.dkpro.tc.ml.svmhmm.util.SVMHMMUtils;
 
 import java.io.File;
 import java.util.List;

@@ -21,12 +21,13 @@ package de.tudarmstadt.ukp.experiments.argumentation.sequence.feature.syntactic;
 import de.tudarmstadt.ukp.experiments.argumentation.sequence.feature.AbstractUnitSentenceFeatureGenerator;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence;
 import de.tudarmstadt.ukp.dkpro.core.api.syntax.type.constituent.*;
-import de.tudarmstadt.ukp.dkpro.tc.api.exception.TextClassificationException;
-import de.tudarmstadt.ukp.dkpro.tc.api.features.Feature;
 import org.apache.uima.jcas.JCas;
+import org.dkpro.tc.api.exception.TextClassificationException;
+import org.dkpro.tc.api.features.Feature;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.apache.uima.fit.util.JCasUtil.selectCovered;
 
@@ -55,7 +56,7 @@ public class SubClausesCount
     static final String SUBCLAUSES = "sub_clauses_count";
 
     @Override
-    protected List<Feature> extract(JCas jCas, Sentence sentence, String sentencePrefix)
+    protected Set<Feature> extract(JCas jCas, Sentence sentence, String sentencePrefix)
             throws TextClassificationException
     {
         double nbClauses = 0;
@@ -70,7 +71,7 @@ public class SubClausesCount
 
         }
 
-        List<Feature> featList = new ArrayList<>();
+        Set<Feature> featList = new HashSet<>();
         featList.add(new Feature(sentencePrefix + SUBCLAUSES, nbClauses));
         return featList;
     }

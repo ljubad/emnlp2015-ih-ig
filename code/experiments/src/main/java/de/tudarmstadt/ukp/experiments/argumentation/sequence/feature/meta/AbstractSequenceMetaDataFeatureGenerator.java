@@ -18,32 +18,38 @@
 
 package de.tudarmstadt.ukp.experiments.argumentation.sequence.feature.meta;
 
-import de.tudarmstadt.ukp.dkpro.tc.api.exception.TextClassificationException;
-import de.tudarmstadt.ukp.dkpro.tc.api.features.ClassificationUnitFeatureExtractor;
-import de.tudarmstadt.ukp.dkpro.tc.api.features.Feature;
-import de.tudarmstadt.ukp.dkpro.tc.api.features.FeatureExtractorResource_ImplBase;
-import de.tudarmstadt.ukp.dkpro.tc.api.type.TextClassificationUnit;
+//import de.tudarmstadt.ukp.dkpro.tc.api.features.ClassificationUnitFeatureExtractor;
+//import de.tudarmstadt.ukp.dkpro.tc.api.features.Feature;
+//import de.tudarmstadt.ukp.dkpro.tc.api.features.FeatureExtractorResource_ImplBase;
+//import de.tudarmstadt.ukp.dkpro.tc.api.type.TextClassificationUnit;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.uima.jcas.JCas;
+import org.dkpro.tc.api.exception.TextClassificationException;
+import org.dkpro.tc.api.features.Feature;
+import org.dkpro.tc.api.features.FeatureExtractor;
+import org.dkpro.tc.api.features.FeatureExtractorResource_ImplBase;
+import org.dkpro.tc.api.type.TextClassificationTarget;
 
 import java.io.*;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Ivan Habernal
  */
 public abstract class AbstractSequenceMetaDataFeatureGenerator
         extends FeatureExtractorResource_ImplBase
-        implements ClassificationUnitFeatureExtractor
+        implements FeatureExtractor
 {
     protected abstract List<String> extractSequence(JCas jCas,
-            TextClassificationUnit classificationUnit);
+            TextClassificationTarget classificationUnit);
 
     protected abstract String getMetaDataFeatureName();
 
     @Override
-    public List<Feature> extract(JCas jCas, TextClassificationUnit classificationUnit)
+    public Set<Feature> extract(JCas jCas, TextClassificationTarget classificationUnit)
             throws TextClassificationException
     {
         List<String> tags = extractSequence(jCas, classificationUnit);
@@ -52,7 +58,9 @@ public abstract class AbstractSequenceMetaDataFeatureGenerator
         String value = encodeToString(tags);
         Feature feature = new Feature(getMetaDataFeatureName(), value);
 
-        return Collections.singletonList(feature);
+        HashSet<Feature> features = new HashSet<>();
+        features.add(feature);
+        return features;
     }
 
     public static String encodeToString(Object object)

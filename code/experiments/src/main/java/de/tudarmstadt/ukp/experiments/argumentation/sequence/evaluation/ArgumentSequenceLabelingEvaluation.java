@@ -31,20 +31,30 @@ import de.tudarmstadt.ukp.experiments.argumentation.sequence.feature.lexical.Lem
 import de.tudarmstadt.ukp.experiments.argumentation.sequence.io.ArgumentSequenceSentenceLevelReader;
 import de.tudarmstadt.ukp.experiments.argumentation.sequence.report.TokenLevelEvaluationReport;
 import de.tudarmstadt.ukp.experiments.argumentation.sequence.report.TokenLevelMacroFMReport;
-import de.tudarmstadt.ukp.dkpro.lab.Lab;
-import de.tudarmstadt.ukp.dkpro.lab.task.Dimension;
-import de.tudarmstadt.ukp.dkpro.lab.task.ParameterSpace;
-import de.tudarmstadt.ukp.dkpro.lab.task.impl.BatchTask;
-import de.tudarmstadt.ukp.dkpro.tc.core.Constants;
-import de.tudarmstadt.ukp.dkpro.tc.fstore.simple.SparseFeatureStore;
-import de.tudarmstadt.ukp.dkpro.tc.ml.ExperimentCrossValidation;
-import de.tudarmstadt.ukp.dkpro.tc.ml.ExperimentTrainTest;
-import de.tudarmstadt.ukp.dkpro.tc.svmhmm.task.SVMHMMTestTask;
+//import de.tudarmstadt.ukp.dkpro.lab.Lab;
+//import de.tudarmstadt.ukp.dkpro.lab.task.Dimension;
+//import de.tudarmstadt.ukp.dkpro.lab.task.ParameterSpace;
+//import de.tudarmstadt.ukp.dkpro.lab.task.impl.BatchTask;
+//import de.tudarmstadt.ukp.dkpro.tc.core.Constants;
+//import de.tudarmstadt.ukp.dkpro.tc.fstore.simple.SparseFeatureStore;
+//import de.tudarmstadt.ukp.dkpro.tc.ml.ExperimentCrossValidation;
+//import de.tudarmstadt.ukp.dkpro.tc.ml.ExperimentTrainTest;
+//import de.tudarmstadt.ukp.dkpro.tc.svmhmm.task.SVMHMMTestTask;
 import org.apache.commons.lang.StringUtils;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.fit.component.NoOpAnnotator;
 import org.apache.uima.fit.factory.AnalysisEngineFactory;
 import org.apache.uima.resource.ResourceInitializationException;
+import org.dkpro.lab.Lab;
+import org.dkpro.lab.task.BatchTask;
+import org.dkpro.lab.task.Dimension;
+import org.dkpro.lab.task.ParameterSpace;
+import org.dkpro.tc.core.Constants;
+import org.dkpro.tc.core.ml.TcShallowLearningAdapter;
+//import org.dkpro.tc.fstore.simple.SparseFeatureStore;
+import org.dkpro.tc.ml.ExperimentCrossValidation;
+import org.dkpro.tc.ml.ExperimentTrainTest;
+import org.dkpro.tc.ml.svmhmm.task.SVMHMMTestTask;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -106,7 +116,6 @@ public class ArgumentSequenceLabelingEvaluation
     {
         System.setProperty("org.apache.uima.logger.class",
                 "org.apache.uima.util.impl.Log4jLogger_impl");
-        SVMHMMTestTask.PRINT_STD_OUT = true;
 
         File mainOutputFolder = new File(outputPath);
         // date
@@ -193,7 +202,7 @@ public class ArgumentSequenceLabelingEvaluation
             // normal CV
             if (trainingRegister == null && testRegister == null) {
                 result.put(Constants.DIM_READER_TRAIN, ArgumentSequenceSentenceLevelReader.class);
-                result.put(Constants.DIM_READER_TRAIN_PARAMS,
+                result.put("readerTrainParams",
                         Arrays.asList(ArgumentSequenceSentenceLevelReader.PARAM_SOURCE_LOCATION,
                                 corpusFilePathTrain,
                                 ArgumentSequenceSentenceLevelReader.PARAM_PATTERNS,
@@ -203,7 +212,7 @@ public class ArgumentSequenceLabelingEvaluation
             else {
                 // we have cross-register train-test
                 result.put(Constants.DIM_READER_TRAIN, ArgumentSequenceSentenceLevelReader.class);
-                result.put(Constants.DIM_READER_TRAIN_PARAMS,
+                result.put("readerTrainParams",
                         Arrays.asList(ArgumentSequenceSentenceLevelReader.PARAM_SOURCE_LOCATION,
                                 corpusFilePathTrain,
                                 ArgumentSequenceSentenceLevelReader.PARAM_PATTERNS,
@@ -211,11 +220,11 @@ public class ArgumentSequenceLabelingEvaluation
                                 ArgumentSequenceSentenceLevelReader.PARAM_DOCUMENT_REGISTER,
                                 StringUtils.join(trainingRegister, " ")));
                 result.put(Constants.DIM_READER_TEST, ArgumentSequenceSentenceLevelReader.class);
-                result.put(Constants.DIM_READER_TEST_PARAMS,
+                result.put("readerTrainParams",
                         Arrays.asList(ArgumentSequenceSentenceLevelReader.PARAM_SOURCE_LOCATION,
 //                                corpusFilePathTrain,
-                                "/root/pipeline-poc-code/xmi/",
-//                                "/home/david/dev/workspaces/workspace-lazar/pipeline/xmi",
+//                                "/root/pipeline-poc-code/xmi/",
+                                "/home/david/dev/workspaces/workspace-lazar/pipeline/xmi",
                                 ArgumentSequenceSentenceLevelReader.PARAM_PATTERNS,
                                 ArgumentSequenceSentenceLevelReader.INCLUDE_PREFIX + "*.xmi",
                                 ArgumentSequenceSentenceLevelReader.PARAM_LENIENT, false,
@@ -227,7 +236,7 @@ public class ArgumentSequenceLabelingEvaluation
             if (inDomain) {
                 // in domain cross validation
                 result.put(Constants.DIM_READER_TRAIN, ArgumentSequenceSentenceLevelReader.class);
-                result.put(Constants.DIM_READER_TRAIN_PARAMS,
+                result.put("readerTrainParams",
                         Arrays.asList(ArgumentSequenceSentenceLevelReader.PARAM_SOURCE_LOCATION,
                                 corpusFilePathTrain,
                                 ArgumentSequenceSentenceLevelReader.PARAM_PATTERNS,
@@ -245,7 +254,7 @@ public class ArgumentSequenceLabelingEvaluation
 
                 // we have cross-domain train-test (param documentDomain is the test domain)
                 result.put(Constants.DIM_READER_TRAIN, ArgumentSequenceSentenceLevelReader.class);
-                result.put(Constants.DIM_READER_TRAIN_PARAMS,
+                result.put("readerTrainParams",
                         Arrays.asList(ArgumentSequenceSentenceLevelReader.PARAM_SOURCE_LOCATION,
                                 corpusFilePathTrain,
                                 ArgumentSequenceSentenceLevelReader.PARAM_PATTERNS,
@@ -256,7 +265,7 @@ public class ArgumentSequenceLabelingEvaluation
 
                 // we have cross-domain train-test (param documentDomain is the test domain)
                 result.put(Constants.DIM_READER_TEST, ArgumentSequenceSentenceLevelReader.class);
-                result.put(Constants.DIM_READER_TEST_PARAMS,
+                result.put("readerTrainParams",
                         Arrays.asList(ArgumentSequenceSentenceLevelReader.PARAM_SOURCE_LOCATION,
                                 corpusFilePathTrain,
                                 ArgumentSequenceSentenceLevelReader.PARAM_PATTERNS,
@@ -272,8 +281,8 @@ public class ArgumentSequenceLabelingEvaluation
 
     @SuppressWarnings("unchecked")
     public ParameterSpace getParameterSpace(DocumentDomain documentDomain, boolean inDomain,
-            String requiredClusters, Set<DocumentRegister> trainingRegister,
-            Set<DocumentRegister> testRegister)
+                                            String requiredClusters, Set<DocumentRegister> trainingRegister,
+                                            Set<DocumentRegister> testRegister)
     {
         // configure training and test data reader dimension
         Map<String, Object> dimReaders = createDimReaders(documentDomain, inDomain, corpusPath,
@@ -284,7 +293,7 @@ public class ArgumentSequenceLabelingEvaluation
 
         // parameters to configure feature extractors
         Dimension<List<Object>> dimPipelineParameters = Dimension
-                .create(Constants.DIM_PIPELINE_PARAMS, asList(new Object[] {
+                .create("readerTrainParams", asList(new Object[] {
                                 // top 50k ngrams
                                 LemmaLuceneNGramUFE.PARAM_NGRAM_USE_TOP_K, "10000",
                                 LemmaLuceneNGramUFE.PARAM_NGRAM_MIN_N, 1,
@@ -309,7 +318,7 @@ public class ArgumentSequenceLabelingEvaluation
         return new ParameterSpace(Dimension.createBundle("readers", dimReaders),
                 Dimension.create(Constants.DIM_LEARNING_MODE, Constants.LM_SINGLE_LABEL),
                 Dimension.create(Constants.DIM_FEATURE_MODE, Constants.FM_SEQUENCE),
-                Dimension.create(Constants.DIM_FEATURE_STORE, SparseFeatureStore.class.getName()),
+                Dimension.create(Constants.DIM_FEATURE_USE_SPARSE, SparseFeatureStore.class.getName()),
                 dimPipelineParameters, dimFeatureSets, dimClassificationArgsE,
                 dimClassificationArgsT, dimClassificationArgsC);
     }
@@ -318,7 +327,7 @@ public class ArgumentSequenceLabelingEvaluation
             throws Exception
     {
         ExperimentCrossValidation batch = new ExperimentCrossValidation(
-                "ArgumentSequenceLabelingCV", SVMAdapterBatchTokenReport.class, getPreprocessing(),
+                "ArgumentSequenceLabelingCV", TcShallowLearningAdapter.class,
                 NUM_FOLDS);
         batch.setParameterSpace(pSpace);
         batch.addInnerReport(TokenLevelEvaluationReport.class);
@@ -339,7 +348,7 @@ public class ArgumentSequenceLabelingEvaluation
     {
         ExperimentCrossValidation batch = new ExperimentCrossValidation(
                 "ArgumentSequenceLabeling_InDomain_" + documentDomain.toString(),
-                SVMAdapterBatchTokenReport.class, getPreprocessing(), NUM_FOLDS);
+                TcShallowLearningAdapter.class, NUM_FOLDS);
         batch.setParameterSpace(pSpace);
         batch.addInnerReport(TokenLevelEvaluationReport.class);
         batch.addInnerReport(TokenLevelMacroFMReport.class);
@@ -354,7 +363,7 @@ public class ArgumentSequenceLabelingEvaluation
     {
         ExperimentTrainTest batch = new ExperimentTrainTest(
                 "ArgumentSequenceLabeling_CrossDomain_" + documentDomain.toString(),
-                SVMAdapterBatchTokenReport.class, getPreprocessing());
+                TcShallowLearningAdapter.class);
         batch.setParameterSpace(pSpace);
         batch.addInnerReport(TokenLevelEvaluationReport.class);
         batch.addInnerReport(TokenLevelMacroFMReport.class);
@@ -368,8 +377,7 @@ public class ArgumentSequenceLabelingEvaluation
             throws Exception
     {
         ExperimentTrainTest batch = new ExperimentTrainTest(
-                "ArgumentSequenceLabeling_CrossRegister_" + name, SVMAdapterBatchTokenReport.class,
-                getPreprocessing());
+                "ArgumentSequenceLabeling_CrossRegister_" + name, TcShallowLearningAdapter.class);
         batch.setParameterSpace(pSpace);
         batch.addInnerReport(TokenLevelEvaluationReport.class);
         batch.addInnerReport(TokenLevelMacroFMReport.class);
